@@ -7,12 +7,24 @@ import Loading from "./Loading";
 class CommentArea extends Component {
   state = {
     comments: [],
-    loading: true,
+    loading: false,
     error: false,
   };
 
   componentDidMount = () => {
+    this.setState({
+      loading: true,
+    });
     this.fetchComments();
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.elementId !== this.props.elementId) {
+      this.setState({
+        loading: true,
+      });
+      this.fetchComments();
+    }
   };
 
   fetchComments = async () => {
